@@ -35,6 +35,8 @@
 
         </div>
     </div>
+
+    <!--adding firebase auth to project-->
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
@@ -57,9 +59,8 @@
         const database = getDatabase(app);
         const auth = getAuth();
 
-
+//loginbtn -> firebase auth signIn
     $("#LoginBtn").click(function(){
-
         var email = $("#email").val();
         var pass = $("#password").val();
 
@@ -67,8 +68,9 @@
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    // ...
     alert("successfully login ");
+    
+    //opening new page after sucessfully
     window.location.href = "admin.html";
   })
   .catch((error) => {
@@ -80,9 +82,6 @@
 
    
 });
-
-
-
       </script>
 
     <script src="js/app.js"></script>

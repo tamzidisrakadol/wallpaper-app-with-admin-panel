@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/style.css"/>
+    </head>
+
+    <!--body background color will be black for body class -->
+    <body class="bg-dark">
+
+    <!--class card is for cardView -->
+    <div id="login-card" class="card">
+        <div class="card-body">
+            <h1>Admin Panel</h1>
+
+
+            <!--login form with email and password & login btn -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input type="text" id="email"  name="email" class="form-control">
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="password">password</label>
+                        <input type="password" id="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button id="LoginBtn" type="button" class="btn btn-primary">Login</button>
+                    </div>
+                
+            </form>
+
+        </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+        import { getAuth,createUserWithEmailAndPassword ,signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        
+       
+        const firebaseConfig = {
+          apiKey: "AIzaSyBwWinf_fLMZ3g3ZTNZUA5W-VW5pqnrdFk",
+          authDomain: "wallpaper-e3aa0.firebaseapp.com",
+          projectId: "wallpaper-e3aa0",
+          storageBucket: "wallpaper-e3aa0.appspot.com",
+          messagingSenderId: "817059987854",
+          appId: "1:817059987854:web:b3ebb016e17458879524df",
+          measurementId: "G-TN2VJYD42Y"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+
+    $("#LoginBtn").click(function(){
+
+        var email = $("#email").val();
+        var pass = $("#password").val();
+
+  signInWithEmailAndPassword(auth,email, pass)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+    alert("successfully login ");
+    window.location.href = "admin.html";
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    alert(errorMessage);
+  });
+
+   
+});
+
+
+
+      </script>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

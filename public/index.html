@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
-       
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/style.css"/>
-    </head>
 
-    <!--body background color will be black for body class -->
-    <body class="bg-dark">
+<head>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<!--body background color will be black for body class -->
+
+<body class="bg-dark">
 
     <!--class card is for cardView -->
     <div id="login-card" class="card">
@@ -20,7 +22,7 @@
             <form id="login-form">
                 <div class="form-group">
                     <label for="email">email</label>
-                    <input type="text" id="email"  name="email" class="form-control">
+                    <input type="text" id="email" name="email" class="form-control">
                 </div>
                 <form id="login-form">
                     <div class="form-group">
@@ -30,8 +32,8 @@
                     <div class="form-group">
                         <button id="LoginBtn" type="button" class="btn btn-primary">Login</button>
                     </div>
-                
-            </form>
+
+                </form>
 
         </div>
     </div>
@@ -41,48 +43,62 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
         import { getDatabase } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-        import { getAuth,createUserWithEmailAndPassword ,signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-        
-       
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
         const firebaseConfig = {
-          apiKey: "AIzaSyBwWinf_fLMZ3g3ZTNZUA5W-VW5pqnrdFk",
-          authDomain: "wallpaper-e3aa0.firebaseapp.com",
-          projectId: "wallpaper-e3aa0",
-          storageBucket: "wallpaper-e3aa0.appspot.com",
-          messagingSenderId: "817059987854",
-          appId: "1:817059987854:web:b3ebb016e17458879524df",
-          measurementId: "G-TN2VJYD42Y"
+            apiKey: "AIzaSyBwWinf_fLMZ3g3ZTNZUA5W-VW5pqnrdFk",
+            authDomain: "wallpaper-e3aa0.firebaseapp.com",
+            projectId: "wallpaper-e3aa0",
+            storageBucket: "wallpaper-e3aa0.appspot.com",
+            messagingSenderId: "817059987854",
+            appId: "1:817059987854:web:b3ebb016e17458879524df",
+            measurementId: "G-TN2VJYD42Y"
         };
-      
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const auth = getAuth();
 
-//loginbtn -> firebase auth signIn
-    $("#LoginBtn").click(function(){
-        var email = $("#email").val();
-        var pass = $("#password").val();
+        //loginbtn -> firebase auth signIn
+        $("#LoginBtn").click(function () {
+            var email = $("#email").val();
+            var pass = $("#password").val();
 
-  signInWithEmailAndPassword(auth,email, pass)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    alert("successfully login ");
-    
-    //opening new page after sucessfully
-    window.location.href = "admin.html";
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+            signInWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    alert("successfully login ");
 
-    alert(errorMessage);
-  });
+                    //opening new page after sucessfully
+                    window.location.href = "admin.html";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-   
-});
-      </script>
+                    alert(errorMessage);
+                });
+
+
+        });
+
+        //auth observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const uid = user.uid;
+                window.location.href = "admin.html";
+            }
+        });
+
+
+
+
+    </script>
 
     <script src="js/app.js"></script>
 </body>

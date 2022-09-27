@@ -1,0 +1,53 @@
+<!--categori ui-->
+
+<h2>Categories</h2>
+
+<hr/>
+
+<div class="row">
+    <div class="col-lg-5">
+        <h4>Add new</h4>
+        <form>
+
+        <!--categori name -->
+            <div class="form-froup">
+                <label for="category-name">Enter name</label>
+                <input type="text" class="form-control" id="category-name"/>
+            </div>
+
+            <!--categori description-->
+            <div class="form-froup">
+                <label for="category-desc">Description</label>
+                <input type="text" class="form-control" id="category-desc"/>
+            </div>
+
+            <!--categori file-->
+            <div class="form-froup">
+                <label for="category-thumbnail">Thumbnail</label>
+                <input type="file" class="form-control" id="category-thumbnail"/>
+            </div>
+            
+            <!--categori progressbar-->
+            <div class="form-group">
+                <div class="progress">
+                    <div class="progress-bar" style="width:0%">0%</div>
+                </div>
+            </div>
+
+            <!--save btn-->
+            <div class="form-group">
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+
+        <div id="result">
+
+        </div>
+    </div>
+
+    <!-- to show save categories -->
+    <div class="col-lg-7">
+        <h4>Saved Categories</h4>
+    </div>
+</div>
+

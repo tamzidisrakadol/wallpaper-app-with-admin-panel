@@ -13,30 +13,37 @@
             <div class="form-froup">
                 <label for="category-name">Enter name</label>
                 <input type="text" class="form-control" id="category-name"/>
+                <div class="invalid-feedback">Please enter a category name</div>
             </div>
 
             <!--categori description-->
             <div class="form-froup">
                 <label for="category-desc">Description</label>
                 <input type="text" class="form-control" id="category-desc"/>
+                <div class="invalid-feedback">Please enter a category name</div>
             </div>
 
-            <!--categori file-->
+            <!--category file-->
             <div class="form-froup">
                 <label for="category-thumbnail">Thumbnail</label>
                 <input type="file" class="form-control" id="category-thumbnail"/>
+                <div class="invalid-feedback">Please choose a valid image file</div>
+            </div>
+
+            <div class="form-group">
+                <img id="selected-thumbanail" width="250" height="150" src="#"/>
             </div>
             
             <!--categori progressbar-->
             <div class="form-group">
                 <div class="progress">
-                    <div class="progress-bar" style="width:0%">0%</div>
+                    <div class="progress-bar" id="upload-progress" style="width:0%">0%</div>
                 </div>
             </div>
 
             <!--save btn-->
             <div class="form-group">
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" id="save-category" class="btn btn-primary">Save</button>
             </div>
         </form>
 
@@ -50,4 +57,59 @@
         <h4>Saved Categories</h4>
     </div>
 </div>
+
+<script>
+    var validImgType=["image/gif","image/jpeg","image/png"];
+
+    $("#selected-thumbanail").hide();
+
+    function previewThumbnail(thumbnail){
+        if(thumbnail.files && thumbnail.files[0]){
+            var reader = new FileReader();
+            reader.onload=function(e){
+                $("#selected-thumbanail").attr('src',e.target.result);
+                $("#selected-thumbanail").fadeIn();
+
+            }
+            reader.readAsDataURL(thumbnail.files[0]);
+
+        }
+    }
+
+    $("#category-thumbnail").change (function(){
+        previewThumbnail(this);
+    });
+
+
+    $("#save-category").click(function(){
+       
+        $("#category-name").removeClass("is-invalid"); 
+        $("#category-desc").removeClass("is-invalid"); 
+        $("#category-thumbnail").removeClass("is-invalid"); 
+
+
+        var catName = $("#category-name").val();
+        var catDesc = $("#category-desc").val();
+        var sThumbanil = $("#category-thumbnail").prop("files")[0];
+
+        if(!catName){
+            $("#category-name").addClass("is-invalid"); 
+            return;
+
+        }
+         if(!catDesc){
+            $("#category-desc").addClass("is-invalid"); 
+            return;
+
+        } if(sThumbanil==null){
+            $("#category-thumbnail").addClass("is-invalid"); 
+            return;
+        }
+         if ($.inArray(thumbnail["type"],validImgType)<0){
+            $("#category-thumbnail").addClass("is-invalid"); 
+            return;
+        }
+    });
+
+</script>
 

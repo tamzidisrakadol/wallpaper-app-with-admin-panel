@@ -59,6 +59,7 @@
 </div>
 
 <script>
+
     var validImgType=["image/gif","image/jpeg","image/png"];
 
     $("#selected-thumbanail").hide();
@@ -90,7 +91,7 @@
 
         var catName = $("#category-name").val();
         var catDesc = $("#category-desc").val();
-        var sThumbanil = $("#category-thumbnail").prop("files")[0];
+        var thumbanail = $("#category-thumbnail").prop("files")[0];
 
         if(!catName){
             $("#category-name").addClass("is-invalid"); 
@@ -101,14 +102,67 @@
             $("#category-desc").addClass("is-invalid"); 
             return;
 
-        } if(sThumbanil==null){
+        } if(thumbanail==null){
             $("#category-thumbnail").addClass("is-invalid"); 
             return;
         }
-         if ($.inArray(thumbnail["type"],validImgType)<0){
+         if ($.inArray(thumbanail["type"],validImgType)<0){
             $("#category-thumbnail").addClass("is-invalid"); 
             return;
         }
+        
+        //var database = firebase.database.ref("categories/"+catName);
+        const storageRef = ref(storage, "categories/"+catName);
+
+        storageRef.once("value").then(function(snapshot){
+            if(snapshot.exists()){
+                $("#result").attr("class","alert alert-danger");
+                $("#result").html("Category already exists");
+            }else{
+                var name = thumbanail["name"];
+                var ext = name.substring(name.lastIndexOf("."),name.length);
+                var thumbName = new Date.getTime();
+                var storageRef = firebase.storage().ref(catName+"/"+thumbName);
+                var uploadTask = storageRef.put(thumbanail);
+                uploadTask.on("state_changed",
+                
+                function progress(snapshot){
+                    var percentage  = (snapshot.bytesTransferred/snapshot.totalbytes) *100;
+                    $("upload-progress").html(percentage+"%");
+                    $("upload-progress").attr("style","width: "+percentage+" %");
+
+                },
+
+                function error(err){
+
+                },
+
+                function complete(){
+                    var thumbnailUrl = uploadTask.snapshot.downloadURL;
+                    var saveCat = {
+                      "thumbanail" : thumbnailUrl,
+                      "desc" :  catDesc
+                    };
+
+                    database.set(saveCat,function(err){
+                        if(err){
+                            $("#result").attr("class","alert alert-danger");
+                            $("#result").html(err.message);
+                        }else{
+                            $("#result").attr("class","alert alert-success");
+                            $("#result").html("Category added");
+                        }
+                    })
+
+                }
+                
+                
+                
+                );
+            }
+        });
+
+
     });
 
 </script>

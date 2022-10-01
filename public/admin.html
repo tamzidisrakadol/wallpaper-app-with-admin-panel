@@ -70,6 +70,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
         import { getDatabase } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        import { getStorage,ref } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
 
 
         const firebaseConfig = {
@@ -85,6 +86,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const storage = getStorage();
         const auth = getAuth();
 
         //auth observer
